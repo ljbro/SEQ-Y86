@@ -1,0 +1,33 @@
+                           | # Execution begins at address 0
+0x000:                      | .pos 0
+0x000: 30f41501000000000000 | irmovq $stack, %rsp  # Set up stack pointer, IIRMOVQ
+0x00a: 803800000000000000   | call main            # Execute main program, ICALL
+0x013: 00                   | halt                 # Terminate program, IHALT
+                            | # Array of 4 elements
+0x018:                      | .align 8
+0x018: ef34567890abcdef     | array: .quad 0x1234567890ABCDEF  # 示例数组元素
+                            | # Main function
+0x038: 30f71700000000000000 | main: irmovq $array, %rdi  # Load array address into %rdi, IIRMOVQ
+0x042: 30f60600000000000000 | irmovq $8, %rsi             # Set byte count to 8, IIRMOVQ
+                            | # mrmovlu test: Load lower 4 bytes, upper 4 bytes zero-extended
+0x04c: 51170100000000000000 | mrmovlu (%rdi), %r8   # IMRMOVLU, ifun=1
+                            | # ...
+                            | # mrmovwu test: Load lower 2 bytes, upper 6 bytes zero-extended
+0x056: 52170100000000000000 | mrmovwu (%rdi), %r9   # IMRMOVWU, ifun=2
+                            | # ...
+                            | # mrmovbu test: Load lower 1 byte, upper 7 bytes zero-extended
+0x060: 53170100000000000000 | mrmovbu (%rdi), %r10  # IMRMOVBU, ifun=3
+                            | # ...
+                            | # mrmovls test: Load lower 4 bytes, upper 4 bytes sign-extended
+0x06a: 54170100000000000000 | mrmovls (%rdi), %r11  # IMRMOVLS, ifun=4
+                            | # ...
+                            | # mrmovws test: Load lower 2 bytes, upper 6 bytes sign-extended
+0x074: 55170100000000000000 | mrmovws (%rdi), %r12  # IMRMOVWS, ifun=5
+                            | # ...
+                            | # mrmovbs test: Load lower 1 byte, upper 7 bytes sign-extended
+0x07e: 56170100000000000000 | mrmovbs (%rdi), %r13  # IMRMOVBS, ifun=6
+                            | # ...
+0x088: 90                   | ret                      # Return from main, IRET
+                            | # The stack starts here and grows to lower addresses
+0x100:                      | .pos 0x100
+0x100:                      | stack:

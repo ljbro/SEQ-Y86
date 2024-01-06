@@ -1,0 +1,12 @@
+
+0x000: 30f6ffffffffffffffff |  irmovq $-1, %rdi       # Load immediate value -1 into %rdi
+0x00a: 30f50100000000000000 | irmovq $1,%rdi               
+0x014: d056                 | sal %rdi, 1                  # Left shift value in %rdi by 1, SAL (130)
+                            | # Signed right shift (sar)
+0x016: e056                 | sar %rdi, 1                  # Arithmetic right shift value in %rdi by 1, SAR (144)
+                            | # Unsigned right shift (shr)
+0x018: d2f60100000000000000 | shr %rdi, 1                  # Logical right shift value in %rdi by 1, SHR (140)
+0x022: e2f60100000000000000 | ret                          # Return from main
+0x03c: 90                   | # The stack starts here and grows to lower addresses
+0x100:                      | .pos 0x100
+0x100:                      | stack:

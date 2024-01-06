@@ -1,0 +1,16 @@
+                            | # Execution begins at address 0
+0x000:                      | .pos 0
+0x000: 30f40001000000000000 | irmovq stack, %rsp   # Set up stack pointer
+0x00a: 803800000000000000   | call main            # Execute main program
+0x013: 00                   | halt                 # Terminate program
+                            | # Main function
+0x038: 30f68000000000008000 | main: irmovq $24, %r8        # Load immediate value 8 into %rdi
+0x042: 41631800000000000000 | rmmovl %rdi, 24(%rbx)          # Move lower 4 bytes of %rdi to memory at address %rbx + 8
+0x04c: 30f66000000000000040 | irmovq $16, %rdi              # Load immediate value 16 into %rdi
+0x056: 42633800000000000000 | rmmovw %rdi, 56(%rbx)         # Move lower 2 bytes of %rdi to memory at address %rbx + 16
+0x060: 30f66000000000000000 | irmovq $32, %rdi              # Load immediate value 32 into %rdi
+0x06a: 43634000000000000040 | rmmovb %rdi, 64(%rbx)         # Move lower byte of %rdi to memory at address %rbx + 24
+0x074: 90                   | ret                           # Return from main
+                            | # The stack starts here and grows to lower addresses
+0x100:                      | .pos 0x100
+0x100:                      | stack:
